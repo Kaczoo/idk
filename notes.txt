@@ -1,0 +1,108 @@
+ |                 |
+ |    8-BIT CPU    |
+ |                 |
+
+
+=== general info ===
+
+The worst possible working 8-bit cpu
+I hope it will be working
+
+
+=== instruction set ===
+
+[UUU III X R  VVVV VVVV]
+III - instruction id
+X - depends on instruction; usually indicates how VVVV VVVV is going to be used
+R - register id
+U - unused, void bits
+VVVV VVVV - a constant or memory address
+
+MWI -> 000 ( X R )
+MWO -> 001 ( U R )
+ADD -> 010 ( X R )
+JMP -> 011 ( U U )
+JEZ -> 100 ( U R )
+SUB -> 101 ( X R )
+AND -> 110 ( X R )
+IOR -> 111 ( X R )
+
+
+MWI:
+  if X = 0 loads constant VVVV VVVV into R
+  if X = 1 loads a word from memory address VVVV VVVV into R
+
+MWO:
+  loads word stored in R into memory with address VVVV VVVV
+
+ADD:
+  if X = 0 adds a constant VVVV VVVV to R
+  if X = 1 adds a word stored in !R to R
+
+JMP
+  unconditionally updates a value stored in PC to VVVV VVVV
+
+JEZ
+  if R = 0 and ZR0 = 1 updates a value stored in PC to VVVV VVVV
+  if R = 1 and ZR1 = 1 updates a value stored in PC to VVVV VVVV
+
+SUB
+  if X = 0 subtracts a constant VVVV VVVV from R
+  if X = 1 subtracts a word stored in !R from R
+
+AND
+  if X = 0 performs a bitwise AND operation on R with constant VVVV VVVV
+  if X = 1 performs a bitwise AND operation on R with !R
+
+IOR
+  if X = 0 performs a bitwise OR operation on R with constant VVVV VVVV
+  if X = 1 performs a bitwise OR operation on R with !R
+
+
+=== registers ===
+
+= general purpose registers =
+R0: general purpose register 0 -> 0
+R1: general purpose register 1 -> 1
+
+= special usage registers =
+PC: program counter
+
+
+=== flags ===
+
+ZR0: value stored in R0 is equal to 0
+ZR1: value stored in R1 is equal to 0
+
+checked by peforming a bitwise NOR operation
+
+
+=== memory layout ===
+
+[0x00 - 0xFF]
+
+0x00 - 0x7F -> ROM
+  allows for storing 64 16-bit instructions 
+0x80 - 0xFF -> RAM
+  allows for storing 128 8-bit words
+
+
+=== random notes ===
+
+I'm not certainly sure yet on how to deal with memory adresses and program counter.
+I will look up into ram architecture, maybe it will give me some insights
+I may use one ACC register, but I'm not sure how functional will it be
+like I won't be really able to add two numbers, or will I need it anyway, idk
+having 2 general purpose registers to which you can load particular values may be a shout
+might add more registers, i don't know if this is a good idea as I wanna keep it as simple as possible
+from instructions one part of them will be a value and it will be in some bus, that may be chosen in alu
+load value instruction will be necessary
+maybe every instruction will store an 8-bit value which can be ignored or not just so it will be 16-bit
+and first 8 bits will indicate what actions need to be taken
+I want to go with 8-bit memory adresses which will point to 8-bit word each
+it will allow for 2^8 * 8 = 256 * 8 = 2048 bit memory, so 256 8-bit words
+program counter will have to add 2 every iteration, not 1, as instructions will be 16-bit
+i'm not sure if this will work well, but who cares
+idk how big should rom be and all that stuff, I guess it doesn't matter that much so I can just choose what seems reasonable
+i dont need to have a main and side register, i can make them equally important by having 2 zero flags?
+instructions are nowhere close to elegant and so binaries will be horrible but who cares
