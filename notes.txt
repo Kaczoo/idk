@@ -87,6 +87,28 @@ checked by peforming a bitwise NOR operation
   allows for storing 128 8-bit words
 
 
+=== instructions -> alu controls ===
+
+[S1 S2 S3]
+MSB to LSB
+
+MWI -> 0 1 1
+
+MWO -> 0 1 1
+
+ADD -> 0 0 0
+
+JMP -> 0 1 1
+
+JEZ -> 0 1 1
+
+SUB -> 1 0 0
+
+AND -> 0 0 1
+
+IOR -> 0 1 0
+
+
 === random notes ===
 
 I'm not certainly sure yet on how to deal with memory adresses and program counter.
@@ -106,3 +128,21 @@ i'm not sure if this will work well, but who cares
 idk how big should rom be and all that stuff, I guess it doesn't matter that much so I can just choose what seems reasonable
 i dont need to have a main and side register, i can make them equally important by having 2 zero flags?
 instructions are nowhere close to elegant and so binaries will be horrible but who cares
+what does ALU need to be able to do based on instruction set
+ have two input words A and B and option lines
+ output their sum
+ carry-in in adder
+ perform a bitwise NOT operation on B
+ just output A
+ perform a bitwise AND operation on A with B
+ perform a bitwise OR operation on A with B
+I think I can start building a schematic starting with ALU
+idk if output A should be as bitwise AND with B or seperate one
+I have unused multiplexer pin in ALU but does that change anything idk rn
+I finished an ALU and it is working, I know I could have done it better, faster and all but...
+I did it, I am closer to accomplishing my goal
+I can say I feel proud of myself
+step by step I will create my cpu and then other things; feels good
+im doing some work, cant deny that, I understand logisim aswell, that is a huge step
+what should I work on now?
+hmmm
