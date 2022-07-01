@@ -109,6 +109,42 @@ AND -> 0 0 1
 IOR -> 0 1 0
 
 
+=== instructions -> alu output ===
+
+[I1 I2 I3] [R]
+MSB to LSB
+
+i_R0 = !R && (I1 || !(I2 || I3))
+
+i_R1 = R && (I1 || !(I2 || I3))
+
+i_PC = !I1 && I2
+
+i_RAM = !I1 && !I2 && I3
+
+
+=== instructions -> alu input ===
+
+[I1 I2 I3] [X] [R]
+MSB to LSB
+U - unused bit (doesnt matter)
+
+2 multiplexers [A1 A2] [B1 B2]
+MSB to LSB
+00 -> R0
+01 -> R1
+10 -> V
+11 -> RAM
+
+A1 = 
+
+A2 = 
+
+B1 = 
+
+B2 = 
+
+
 === random notes ===
 
 I'm not certainly sure yet on how to deal with memory adresses and program counter.
